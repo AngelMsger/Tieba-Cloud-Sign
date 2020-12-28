@@ -10,3 +10,4 @@ Disallow: /lib/
 Disallow: /setup/
 Disallow: /source/
 Disallow: /templates/
+Disallow: /data/

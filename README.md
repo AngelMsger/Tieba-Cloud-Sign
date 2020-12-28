@@ -41,7 +41,7 @@
 打开 /setup/install.template.sql 并按照里面的注释修改
 ##### 6.如何安装新版本
 （1）自动更新：前往 检查更新 更新程序即可     
-（2）手动更新：直接下载 Zip，删除压缩包内的 config.php ，然后上传到您的网站即可     
+（2）手动更新：直接下载 Zip，删除压缩包内的 config.php 和 data/config.php ，然后上传到您的网站即可     
 另外，每一个大版本都会有一个升级脚本，别忘了运行它     
 （文件名一般为 update旧版本to新版本.php ，例如 update1.0to2.0.php）
 

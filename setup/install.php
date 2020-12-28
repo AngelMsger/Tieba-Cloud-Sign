@@ -8,8 +8,8 @@ header("content-type:text/html; charset=utf-8");
 require SYSTEM_ROOT2.'/../lib/msg.php';
 include SYSTEM_ROOT2.'/../lib/class.wcurl.php';
 
-if (file_exists(SYSTEM_ROOT2.'/install.lock')) {
-    msg('错误：安装锁定，请删除以下文件后再安装：<br/><br/>/setup/install.lock<br/><br/>或者点击下面的按钮返回站点取消安装：', '../');
+if (file_exists(SYSTEM_ROOT.'/data/install.lock')) {
+    msg('错误：安装锁定，请删除以下文件后再安装：<br/><br/>/data/install.lock<br/><br/>或者点击下面的按钮返回站点取消安装：', '../');
 }
 /*
 $csrf = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
@@ -61,7 +61,7 @@ if ( isset($_GET['step']) && ( empty($csrf['host']) || $csrf['host'] != $_SERVER
   </div>
 </div>';
 
-				echo '请按照注释修改 /<b>config.php</b> ，重要位置已经用星号(*)标明<br/><br/><font color="red">警告：</font>切勿使用记事本修改；文件编码应该为 UTF-8 ( 无BOM )';
+				echo '请按照注释修改 /<b>data/config.php</b> ，重要位置已经用星号(*)标明<br/><br/><font color="red">警告：</font>切勿使用记事本修改；文件编码应该为 UTF-8 ( 无BOM )';
 				echo '<br/><br/><div class="highlight"><pre><code class="html">
 &lt?php 
 
@@ -127,7 +127,7 @@ define(\'SYSTEM_SALT\',\'\');
 				echo '<h4>数据库信息</h4>';
 				if (isset($_GET['isbae']) || isset($_GET['bae'])) {
 					echo '<b>提示：</b>如果以下内容有错误，说明您上一步手动修改出现了问题，您可以 <a href="install.php?step=100" class="btn btn-warning btn-xs">返回</a><br/><br/>';
-					@include_once(SYSTEM_ROOT2.'/../config.php');
+					@include_once(SYSTEM_ROOT.'/data/config.php');
 					echo '<div class="input-group"><span class="input-group-addon">数据库地址</span><input type="text" class="form-control" value="'.DB_HOST.'" disabled></div><br/>';
 					echo '<div class="input-group"><span class="input-group-addon">数据库用户名</span><input type="text" class="form-control" value="'.DB_USER.'" disabled></div><br/>';
 					echo '<div class="input-group"><span class="input-group-addon">数据库密码</span><input type="text" class="form-control" value="'.DB_PASSWD.'" disabled></div><br/>';
@@ -136,7 +136,7 @@ define(\'SYSTEM_SALT\',\'\');
 					echo '<input type="hidden" name="isbae" value="1">';
 					echo '<input type="hidden" name="from_config" value="1">';
 				} else {
-					echo '<br/><b>提示 1：</b>如果您已经手动写好了 config.php ，请选择 [ <b>自动获得数据库配置信息</b> ] 为 <b>是</b><br/>';
+					echo '<br/><b>提示 1：</b>如果您已经手动写好了 data/config.php ，请选择 [ <b>自动获得数据库配置信息</b> ] 为 <b>是</b><br/>';
 					echo '<b>提示 2：</b>如果程序并未写入数据库 [ 安装完成后进入首页提示 Table XX doesn\'t exist  ] 请选择强制手动导入 SQL<br/><br/>';
 					echo '<input type="checkbox" name="nosql" value="1"> 强制手动导入 SQL<br/><br/>';
 					echo '<div class="input-group"><span class="input-group-addon">自动获得数据库配置信息</span><select name="from_config" class="form-control"  onchange="if(this.value == \'0\') { $(\'#db_config\').show(); } else { $(\'#db_config\').hide(); }"><option value="0">否</option><option value="1">是</option></select></div><br/>';
@@ -164,7 +164,7 @@ define(\'SYSTEM_SALT\',\'\');
 				}
 				preg_match("/^.*\//", $_SERVER['SCRIPT_NAME'], $sysurl);
 				if($_POST['from_config'] == 1) {
-					require SYSTEM_ROOT2.'/../config.php';
+					require SYSTEM_ROOT.'/data/config.php';
 				} else {
 					define('DB_HOST',$_POST['dbhost']);
 					define('DB_USER',$_POST['dbuser']);
@@ -234,8 +234,8 @@ define(\'ANTI_CSRF\',true);
 
 //加密用盐，留空为不使用
 define(\'SYSTEM_SALT\',\'\');';
-					if(empty($_POST['from_config']) && !file_put_contents('../config.php', $write_data)) {
-						$errorhappen .= '<b>无法写入配置文件 config.php ，请打开本程序根目录的 config.php 并按照注释修改它</b><br/><br/>';
+					if(empty($_POST['from_config']) && !file_put_contents('../data/config.php', $write_data)) {
+						$errorhappen .= '<b>无法写入配置文件 data/config.php ，请打开本程序根目录的 data/config.php 并按照注释修改它</b><br/><br/>';
 					}
 				}
 				if (!isset($_POST['nosql'])) {
@@ -275,8 +275,8 @@ define(\'SYSTEM_SALT\',\'\');';
     <span class="sr-only">90%</span>
   </div>
 </div>';
-				echo '恭喜你，安装已经完成<br/><br/>请添加一个计划任务，文件为本程序根目录下的 <b>do.php</b><br/><br/>计划任务运行时间建议为每分钟运行 ( Linux Crontab参考：<b><font color="blue">* * * * *</font></b> )<br/><br/><br/>为保证站点安全，系统已在 /setup 文件夹下放置了 install.lock 文件，如果您的服务器不支持写入，请手动放置一个空的 install.lock 文件到此文件夹下，否则任何人都有权限重新安装您的云签到。<br/><br/><b>请您尊重作者，无论如何都不要删减云签到的版权</b><br/><br/><input type="button" onclick="location = \'../index.php\'" class="btn btn-success" value="进入我的云签到 >>">';
-				@file_put_contents(SYSTEM_ROOT2.'/install.lock', '1');
+				echo '恭喜你，安装已经完成<br/><br/>请添加一个计划任务，文件为本程序根目录下的 <b>do.php</b><br/><br/>计划任务运行时间建议为每分钟运行 ( Linux Crontab参考：<b><font color="blue">* * * * *</font></b> )<br/><br/><br/>为保证站点安全，系统已在 /data 文件夹下放置了 install.lock 文件，如果您的服务器不支持写入，请手动放置一个空的 install.lock 文件到此文件夹下，否则任何人都有权限重新安装您的云签到。<br/><br/><b>请您尊重作者，无论如何都不要删减云签到的版权</b><br/><br/><input type="button" onclick="location = \'../index.php\'" class="btn btn-success" value="进入我的云签到 >>">';
+				@file_put_contents(SYSTEM_ROOT.'/data/install.lock', '1');
 				break;
 
 			default:

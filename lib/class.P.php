@@ -10,7 +10,7 @@ class P {
 	public $salt   = '';
 
 	/**
-	 * @param string $salt 盐，留空将从config.php读取
+	 * @param string $salt 盐，留空将从 data/config.php 读取
 	 */
 	public function __construct($salt = '') {
 		if (self::PWDMODE && class_exists('option')) {
@@ -59,7 +59,7 @@ class P {
 	 * @param string $str 密文
 	 * @param int $cipher 加密算法，留空为默认
 	 * @param string $mode  加密模式，留空为默认
-	 * @return string|bool 原文或者false表示失败
+	 * @return string|bool 原文或者 false 表示失败
 	 */
 	public function decode($str , $cipher = MCRYPT_RIJNDAEL_256, $mode = MCRYPT_MODE_CFB) {
 		if (!empty($this->salt)) {
