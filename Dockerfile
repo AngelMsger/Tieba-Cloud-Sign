@@ -12,7 +12,9 @@ ENV DB_HOST='127.0.0.1'\
     CONIFG_PATH='/srv/www/data/config.php' \
     CSRF='true'
 
-RUN git clone https://github.com/AngelMsger/Tieba-Cloud-Sign.git /srv/www && \
+RUN git clone https://github.com/AngelMsger/Tieba-Cloud-Sign.git /srv/www/dist && \
+    mv /srv/www/dist/* /srv/www && \
+    rm -r /srv/www/dist && \
     rm -r /var/cache/apk && \
     rm -r /usr/share/man && \
     ls
