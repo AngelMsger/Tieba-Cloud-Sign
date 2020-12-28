@@ -1,10 +1,10 @@
 version: '3.7'
 services:
   web:
-    image: 'angelmsger/tieba-cloud-sign:v5.0.0'
+    image: 'angelmsger/tieba-cloud-sign:v4.92'
     environment:
       DB_HOST: db:3306
-      DB_USER: root
+      DB_USER: tieba
       DB_PASSWD: password
       DB_NAME: tieba
       CSRF: 'true'
@@ -16,7 +16,9 @@ services:
   db:
     image: 'mysql:5'
     environment:
-      MYSQL_DATABASE: tieba
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: tieba
+      MYSQL_USER: tieba
+      MYSQL_PASSWORD: password
     volumes:
-      - /Users/angelmsger/Development/X/mysql:/var/lib/mysql
+      - /var/lib/mysql:/var/lib/mysql
