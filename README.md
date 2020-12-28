@@ -1,4 +1,13 @@
+# 分支库说明
+
+原项目及版权见原文(即本文档第一条分割线后的内容).
+
+原项目将状态文件与项目源码混合存放, 不利于容器化后部署于如Kubernetes的编排工具中. 分支库对此进行调整, 将`config.php`,`install.lock`迁移至独立目录`data`内. 没有对其他逻辑进行调整.
+
+---
+
 # 百度贴吧云签到
+
 在服务器上配置好就无需进行任何操作便可以实现贴吧的全自动签到。     
 配合插件使用还可实现云灌水、点赞、封禁、删帖、审查等功能。     
 获取插件，教程，扩展，资料等请前往Wiki [Git@OSC](https://git.oschina.net/kenvix/Tieba-Cloud-Sign/wikis/home) [GitHub](https://github.com/MoeNetwork/Tieba-Cloud-Sign/wiki)              
