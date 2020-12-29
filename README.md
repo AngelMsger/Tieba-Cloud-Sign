@@ -4,6 +4,8 @@
 
 原项目将状态文件与项目源码混合存放, 不利于容器化后部署于如Kubernetes的编排工具中. 分支库对此进行调整, 将`config.php`,`install.lock`迁移至独立目录`data`内. 没有对其他逻辑进行调整.
 
+由于百度在2020年12月调整了相关页面, 导致原项目中BDUSS判定逻辑失效, 继而无法在页面中绑定新账号. 分支库基于[\#I2AW95](https://gitee.com/kenvix/Tieba-Cloud-Sign/issues/I2AW95)结论修复了此问题.
+
 ---
 
 # 百度贴吧云签到
